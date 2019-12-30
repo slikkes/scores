@@ -30,6 +30,10 @@ const pusher = new Pusher({
 });
 
 
+app.get('/', (req,res)=>{
+  res.send("asd")
+})
+
 app.post('/test', (req, res) => {
 
   pusher.trigger('food', 'status', {
