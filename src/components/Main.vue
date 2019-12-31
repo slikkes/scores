@@ -66,9 +66,9 @@ export default {
     },
     countDownTimer() {
         setTimeout(() => {
-          let hour = 24 - new Date().getHours();
-          let min = 60 - new Date().getMinutes();
-          let sec = 60 - new Date().getSeconds();
+          let hour = 23 - new Date().getHours();
+          let min = 59 - new Date().getMinutes();
+          let sec = 59 - new Date().getSeconds();
 
           hour = hour < 10 ? `0${hour}` : hour;
           min = min < 10 ? `0${min}` : min;
