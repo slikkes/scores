@@ -30,9 +30,9 @@ const pusher = new Pusher({
 });
 
 
-app.get('/', (req,res)=>{
-  res.send("asd")
-})
+app.get('/',function(req,res) {
+  res.sendFile('index.html');
+});
 
 app.post('/test', (req, res) => {
 
