@@ -21,47 +21,22 @@
 </template>
 
 <script>
+import Api from "../Api";
 require('../../node_modules/bulma/css/bulma.css');
 import pusher from 'pusher-js';
+
 export default {
   name: "Main",
   data() {
     return {
-      teams: [
-        {
-          name: "asdf",
-          color: "info",
-          score: 70
-        },
-        {
-          name: "ewr",
-          color: "danger",
-          score: 80
-        },
-        {
-          name: "ewr",
-          color: "success",
-          score: 60
-        },
-        {
-          name: "asdf",
-          color: "warning",
-          score: 10
-        },
-        {
-          name: "ewr",
-          color: "black",
-          score: 40
-        },
-        {
-          name: "ewr",
-          color: "white",
-          score: 600
-        },
-      ]
+      teams: []
     }
   },
   created() {
+    Api().get ("/teams")
+      .then (response => {
+        this.teams = response.data
+      })
     let pusher = new Pusher('befc1e969f052ccc38af', {
       cluster: 'eu',
       //   encrypted: true

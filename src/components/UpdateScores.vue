@@ -39,39 +39,15 @@ import Api from "../Api";
 
 export default {
   name: "UpdateScores",
+  created() {
+    Api().get ("/teams")
+      .then (response => {
+        this.teams = response.data
+      })
+  },
   data() {
     return {
       teams: [
-        {
-          name: "asdf",
-          color: "info",
-          score: 70
-        },
-        {
-          name: "ewr",
-          color: "danger",
-          score: 80
-        },
-        {
-          name: "ewr",
-          color: "success",
-          score: 60
-        },
-        {
-          name: "asdf",
-          color: "warning",
-          score: 10
-        },
-        {
-          name: "ewr",
-          color: "black",
-          score: 40
-        },
-        {
-          name: "ewr",
-          color: "white",
-          score: 600
-        },
       ],
       toAdds: []
     }
@@ -82,20 +58,10 @@ export default {
     },
   },
   methods: {
-    test() {
-      /*pusher.trigger('food', 'status', {
-        message: "asdfas",
-        progress: 0.33
-      });*/
-      this.pressed++
-      Api ().post ("test")
-        .then (() => {
-          this.status++
-        })
-    },
     addScore(team, toAdd) {
       if (Math.abs (toAdd) > 0) {
         team.score += parseInt (toAdd);
+        Api().post("update-team", {id:team._id, updateData:{score: team.score}})
         this.toAdds = [];
       }
     },
