@@ -1,5 +1,8 @@
 <template>
-  <router-view></router-view>
+  <div class="has-background-grey-lighter" style="height: 100vw">
+
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>

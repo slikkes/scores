@@ -25,6 +25,8 @@
         for (var file of chunk.files) {
           if (file.match(/\.(js|css)$/)) { %>
     <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
+    <script src="https://kit.fontawesome.com/e43be724f0.js" crossorigin="anonymous"></script>
+
   </head>
   <body>
     <noscript>
@@ -36,3 +38,4 @@
     <!-- built files will be auto injected -->
   </body>
 </html>
+

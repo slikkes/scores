@@ -1,19 +1,20 @@
 <template>
-  <section class="hero is-danger is-fullheight">
-    <div class="notification is-warning" v-show="!connectivityStatus">
-      <button class="delete"></button>
-      {{connectivityText}}
-    </div>
-    <div class="hero-body">
-      <div class="container">
-        <div class="level">
-          <div class="level-item has-text-centered">
-            <div>
-              <status :progress="progress"></status>
-              <h1 class="title">{{statusText}}</h1>
-            </div>
+  <section class="is-fullheight">
+    <div class="columns" style="padding:20px">
+      <div v-for="team in sortedTeams" :class="`column hero is-${team.color}`" style="margin: 10px">
+        <div class="columns">
+          <div class="column">
+            <h1 class="title">
+              {{team.name}}
+            </h1>
+          </div>
+          <div class="column" style="text-align:right">
+            <h1 class="title">
+              {{team.score}}
+            </h1>
           </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -22,15 +23,42 @@
 <script>
 require('../../node_modules/bulma/css/bulma.css');
 import pusher from 'pusher-js';
-import Status from '@/components/Status';
 export default {
   name: "Main",
   data() {
     return {
-      statusText: '',
-      progress: 0,
-      connectivityText: '',
-      connectivityStatus: true,
+      teams: [
+        {
+          name: "asdf",
+          color: "info",
+          score: 70
+        },
+        {
+          name: "ewr",
+          color: "danger",
+          score: 80
+        },
+        {
+          name: "ewr",
+          color: "success",
+          score: 60
+        },
+        {
+          name: "asdf",
+          color: "warning",
+          score: 10
+        },
+        {
+          name: "ewr",
+          color: "black",
+          score: 40
+        },
+        {
+          name: "ewr",
+          color: "white",
+          score: 600
+        },
+      ]
     }
   },
   created() {
@@ -46,8 +74,12 @@ export default {
       this.progress = data.progress;
     });
   },
+  computed:{
+    sortedTeams(){
+      return this.teams.sort((a,b)=> a.score > b.score ? -1 : 1)
+    },
+  },
   components: {
-    'status': Status
   }
 }
 </script>
