@@ -14,9 +14,13 @@ app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 
-//models
-//const Note = require('./Note');
 
+mongoose.connect(process.env.DB);
+let db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error"));
+db.once("open", function(callback){
+  console.log("connection succeeded");
+});
 
 const Pusher = require('pusher');
 const { PUSHER_APP_ID, PUSHER_KEY, PUSHER_SECRET, TIME } = process.env;
@@ -29,7 +33,12 @@ const pusher = new Pusher({
   encrypted: true
 });
 
+//models
+const Team = require('./server/models/Team');
 
+//routes
+const DataService = require("./server/DataService");
+const service = new DataService(Team);
 app.get('/',function(req,res) {
   res.sendFile(`${process.env.BASEPATH}index.html`);
 });
@@ -44,27 +53,26 @@ app.post('/test', (req, res) => {
   res.send('asdf')
 });
 
+app.get('/teams', async (req, res) =>{
+  let teams = await service.getAllTeam();
+  res.send(teams)
+});
+
+app.post('/create-team', async (req,res)=>{
+  await service.createTeam(req.body);
+  res.send("ok")
+});
+
+app.post('/update-team', async (req,res)=>{
+  await service.updateTeam(req.body.id, req.body.updateData);
+  res.send("ok")
+});
+
+app.post('/delete-team', async (req, res)=>{
+  await service.deleteTeam(req.body.id);
+  res.send("ok")
+});
+
 
 
 app.listen(process.env.PORT || 8081);
-/*let stage = 1;
-const interval = setInterval(() => {
-  const messages = {
-    1: "Order Received",
-    2: "Order Placed",
-    3: "In the Oven",
-    4: "Out for Delivery",
-    5: "Delivered"
-  }
-  stage = stage + 1;
-  const messageId = stage-1;
-  if (stage > 5) {
-    console.log('clearing');
-    clearInterval(interval);
-  }
-  console.log("now")
-  pusher.trigger('food', 'status', {
-    message: messages[messageId],
-    progress: messageId/5
-  });
-}, TIME);*/

@@ -26,17 +26,6 @@
                 </div>
               </div>
             </div>
-<!--
-
-
-            <div class="column is-one-thirds" style=" max-width: 30vw;">
-              <input type="number" style="font-size: 32px;  max-width: 30vw;" v-model="toAdds[idx]">
-            </div>
-
-            <div class="column is-one-thirds" style="text-align:right; font-size:64px; max-width: 30vw;">
-              <a style="font-size:64px;" @click="addScore(team,toAdds[idx])"><i class="fas fa-plus-square"></i></a>
-            </div>
--->
 
           </div>
         </div>
