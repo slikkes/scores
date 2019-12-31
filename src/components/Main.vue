@@ -33,20 +33,15 @@ export default {
     }
   },
   created() {
-    Api().get ("/teams")
-      .then (response => {
-        this.teams = response.data
-      })
+    this.fetchData();
     let pusher = new Pusher('befc1e969f052ccc38af', {
       cluster: 'eu',
       //   encrypted: true
     });
     console.log('asdf')
-    let channel = pusher.subscribe('food');
-    channel.bind('status', (data) => {
-      console.log(data)
-      this.statusText = data.message;
-      this.progress = data.progress;
+    let channel = pusher.subscribe('team');
+    channel.bind('updated', () => {
+      this.fetchData()
     });
   },
   computed:{
@@ -54,7 +49,13 @@ export default {
       return this.teams.sort((a,b)=> a.score > b.score ? -1 : 1)
     },
   },
-  components: {
+  methods:{
+    fetchData() {
+      Api().get ("/teams")
+        .then (response => {
+          this.teams = response.data
+        })
+    },
   }
 }
 </script>
