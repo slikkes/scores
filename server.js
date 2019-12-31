@@ -31,7 +31,7 @@ const pusher = new Pusher({
 
 
 app.get('/',function(req,res) {
-  res.sendFile('index.html');
+  res.sendFile('/scores/index.html');
 });
 
 app.post('/test', (req, res) => {
